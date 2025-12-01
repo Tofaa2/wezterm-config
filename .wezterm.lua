@@ -10,20 +10,42 @@ if is_windows() then
 	config.default_prog = { "powershell.exe" }
 end
 
+-- then finally apply the plugin
+-- these are currently the defaults:
+wezterm.plugin.require("https://github.com/nekowinston/wezterm-bar").apply_to_config(config, {
+  position = "bottom",
+  max_width = 32,
+  dividers = "slant_right", -- or "slant_left", "arrows", "rounded", false
+  indicator = {
+    leader = {
+      enabled = true,
+      off = " ",
+      on = " ",
+    },
+    mode = {
+      enabled = true,
+      names = {
+        resize_mode = "RESIZE",
+        copy_mode = "VISUAL",
+        search_mode = "SEARCH",
+      },
+    },
+  },
+  tabs = {
+    numerals = "arabic", -- or "roman"
+    pane_count = "superscript", -- or "subscript", false
+    brackets = {
+      active = { "", ":" },
+      inactive = { "", ":" },
+    },
+  },
+  clock = { -- note that this overrides the whole set_right_status
+    enabled = true,
+    format = "%H:%M", -- use https://wezfurlong.org/wezterm/config/lua/wezterm.time/Time/format.html
+  },
+})
+
 config.font = wezterm.font("JetBrains Mono", { weight = "Bold", italic = true })
-config.window_frame = {
-	font = wezterm.font({ family = "Roboto", weight = "Bold" }),
-	font_size = 12.0,
-	active_titlebar_bg = "#333333",
-	inactive_titlebar_bg = "#333333",
-}
-
-config.colors = {
-	tab_bar = {
-		inactive_tab_edge = "#575757",
-	},
-}
-
 config.keys = {
 	{
 		key = "h",
@@ -81,7 +103,6 @@ for i = 1, 8 do
 		action = act.ActivateTab(i - 1),
 	})
 end
-
-config.color_scheme = "tokyonight-storm"
+config.color_scheme = "Catppuccin Mocha"
 
 return config
